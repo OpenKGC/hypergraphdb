@@ -1,6 +1,6 @@
 #/bin/bash
 
-version="1.3"
+version="1.4-SNAPSHOT"
 
 echo "Building HyperGraphDB tarball, version $version..."
 
@@ -39,7 +39,7 @@ echo "Copy readme.html"
 cp readme.html dist
 
 echo "Create zip file"
-mv dist hypergraphdb-1.3
-rm hgdbdist-1.3-final.zip hgdbdist-1.3-final.tar.gz
-zip hgdbdist-1.3-final.zip hypergraphdb-1.3/*
-tar cvzf hgdbdist-1.3-final.tar.gz hypergraphdb-1.3
+mv dist hypergraphdb-1.4
+rm hgdbdist-1.4-final.zip hgdbdist-1.4-final.tar.gz
+zip hgdbdist-1.4-final.zip hypergraphdb-1.4/*
+tar cvzf hgdbdist-1.4-final.tar.gz hypergraphdb-1.4

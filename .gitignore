@@ -7,3 +7,6 @@ core/META-INF/
 **/.classpath
 **/.settings
 **/.gitignore
+p2p/META_INF/
+storage/META_INF/
+storage/bdb-je/META-INF/
