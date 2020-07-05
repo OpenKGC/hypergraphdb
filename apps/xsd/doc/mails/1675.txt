@@ -1,0 +1,33 @@
+Thursday, April 12, 2007 7:07 PM
+
+A kakvo e StringValue? Igrae li niakva rolia? Shtoto ne go
+razbiram....validation triabva da stava v type-a ne vav value-to...
+
+Predlagam slednite next steps:
+
+1) Niakav entry point v koito da se registrirat primitive-nite builtins
+(t.e. tezi, koito ne mogat da badat derive-nati ot nishto) i da imat
+mapping kam saotvetni HG types. Znachi kazahme che mapping-a shte bade
+mejdu XSD typename i HG type, chrez niakav link, naprimer
+HGRel(nameOf(hgtype, xsd typename)). Za samia xsd type name, ne znam dali
+reshihme v kraina smetka dali da bade kakto sam go napravil v momenta
+(namespace-a e atribut) ili da bade link mejdu localname i namespace. Mai
+naklonihme kam poslednoto...
+
+2) Sled tova se spirash na edni built-in, koito se derive-va ot
+primitivnite chrez niakvi facets/constraints i go deklarirash samia nego v
+edni schema file.
+
+3) Opitvash se da load-nesh tozi schema file chrez parsing infrastructure
+kakvto izkash (ako moje bez nujda ot extra libs, kakvo imat bundled s Java
+5 samo).
+
+4) Opitvash da upotrebish novoloadnatia type kato se generira class v
+runtime za nego...
+
+Taka shte imame end-to-end process, i predlagam vednaga sled tova (predi
+da se dobaviat drugite built-in types) da se zanimaesh s
+ComplexTypeConstructor, zashtoto tova moje da povliae na design po
+sashtestven nachin.
+
+Kakvo mislish?

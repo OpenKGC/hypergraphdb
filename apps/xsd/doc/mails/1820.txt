@@ -1,0 +1,13 @@
+Thursday, April 26, 2007 10:21 PM
+
+niamam osobeni predpochitania...gledam povecheto open-source proekti
+polzvat cglib, no kriteriite za izbor se znaiat: koi izglejda v akitven
+development i dobre potdarjan, s koi nai-lesno se raboti, koi e s
+nai-malak footprint, koi e nai-dobre dokumentiran i t.n.
+
+edinstvenia, koito az sam polzval e javaassist, no toi ne e chist bytecode
+generation, ami po-skoro za AOP implementacii i moje da kompilira Java. az
+obache si mislia da ne se generira Java, ami direktno bytecode zashtoto mi
+se izka da imame takava expertise-a (po-efficient, poveche hack-ove
+sigurno shte mogat da se praviat i t.n.), i ot tazi gledna tochka
+javaassist stava s prekaleno goliam footprint zaradi Java compilation-a

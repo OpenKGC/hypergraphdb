@@ -1,0 +1,12 @@
+Tuesday, April 3, 2007 6:38 PM
+
+Kato se pozamislih malko po-seriozno kak SimpleTypeConstructor shte
+make-va derived simple types, polzvaiki "semantic links" za restrictions
+etc., se usetih che vsashnost ima dosta osnoven problem:
+SimpleTypeConstructor niama dostap do 'handle' na atom-a chieto value toi
+triabva da konstruira, taka che niama nachin da nameri negovite links.
+Tova e taka po design i e neshto, koeto ne bih promenil: types rabotiat
+direktno s values i ne zavisiat ot tova dali tezi values za hypergraph
+atoms, ili prosto niakvi fields na razni aggregate structuri. Mapping-a
+atoms->values e many-to-one, i ne za vsiako value ima zadaljitelno atom.
+Shte triabva da se zamislim malko poveche po temata ;)

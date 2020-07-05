@@ -1,0 +1,12 @@
+Monday, April 30, 2007 10:05 PM
+
+> Napravih niakakyv end-to-end scenario working bez class generation, kojto
+> sym go napravil "na ryka" v class XMLSchemaStringType - neshto podobno si
+> predstaviam generiran class. Poizchistil sym malko code i sym dobavil
+> registration pri HGOpenEvent.
+
+1) zashto ne se vika stringType.release v XMLSchemaStrignType.release
+2) v tozi konkreten sluchai, sled kato vsichko se delegate-va na
+sashtestvuvashtia StringType, niama nujda vaobshte ot XMLSchemaStringType!
+Niama nujda i ot SimpleTypeConstructor i t.n. Prosto XSD type name triabva
+da se link-va kam sashtestvuvashtia StringType.

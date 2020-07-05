@@ -1,0 +1,149 @@
+Monday, March 26, 2007 11:00 PM
+
+> Na tazi iteratsia vijdam tri osnovni design razklonenia.
+>
+> --- 1. Klasicheska class hierarchy, koiato da se zarodi ot bukvalnoto
+"prevejdane" na XSD datatypes spec i s pomoshtta na inheritance i
+composition da modelira XSD datatypes. Ne vijdam prichina da ne sraboti, no
+> go ostaviam za posleden.
+>
+> --- 2. (Moje bi prekaleno) Abstrakten metamodel na XSD types, pri kojto
+ima
+> metatype classes za XSD datatype poniatiata i chrez instantsii na
+metaclasses i linking da se modelira XSD datatypes. Mnogo mi haresa, che ako
+> bi moglo da se napravi dobre tova, shte se import-vat napravo XSD
+datatype
+> definitions (http://www.w3.org/TR/xmlschema-2/#built-in-datatypes) i
+taka
+> da
+> shte se generirat XSD types v HGDB. Osven che mi izglejda dosta time
+consuming naj-nakraia triabva da se stiga do neshto iasno definirano i
+konkretno - naprimer v tozi model kakvo tochno shte oznachava edno value
+da
+> e XSD string kato se opre do persistence. Moje pyk tezi model types da
+razchitat na JavaBeans mapping za tova. No pyk raznite facets kak shte se
+> obrabotvat. Dosta rabota imam dokato stigna do predlojenie za takyv
+design.
+>
+> --- 3. Naj-zadylbocheno izsledvam zasega podhod i za kojto mislia da
+predloja pyrvo neshto, pri kojto (see
+> http://www.w3.org/TR/xmlschema-2/#built-in-datatypes) da definiram
+specific
+> classes za built-in primitive types i model derived type. Shte definiram
+otdelni HGDB links za derive by restriction, derive by list i veroiatno
+drugi vyzmojni, koito ne znam sega.
+>
+> Za iliustratsia si predstaviam "NMTOKENS" type taka:
+> Pri predefinirani XSDStringType, XSDModelDerivedType,
+> XSDDerivedByRestrictionLink i XSDDerivedByListLink, kydeto:
+> XSDStringType - specific class predstaviasht XSD "string" datatype
+XSDModelDerivedType - model class predstaviasht kojto i da e XSD derived
+datatype (ili s drugi dumi vseki datatype, kojto ne e primitive)
+XSDDerivedByRestrictionLink - link, chieto value e restriction
+> specification
+> XSDDerivedByListLink - link, kojto niama nujda ot value i markira
+relationship "list of"
+>
+> "normalizedString" shte e XSDModelDerivedType instance, kojto e
+> XSDDerivedByRestrictionLink-ed kym XSDStringType
+> ...
+> "NMToken" shte e XSDModelDerivedType instance, kojto e
+> XSDDerivedByRestrictionLink-ed kym "token" XSDModelDerivedType instance
+"NMTokens" shte e XSDModelDerivedType instance, kojto e
+> XSDDerivedByListLink-ed kym "NMToken" XSDModelDerivedType instance
+>
+> XSDModelDerivedType moje da se okaje prekaleno obsht i da ima nujda ot
+niakolko model types. Niamam oshte iasna vizia za "complexType" i
+"simpleType" v tazi shema osven, che links shte igraiat naj-vajnata rolia
+> kakto v primer po-gore.
+
+Ne sam siguren dali razbiram dostatachno dobre, no mi se struva che niakva
+kombinacia ot varianti 2 i 3 triabva da se napravi. T.e. ima niakav
+meta-modeling, koito vliza v igrata na neshto, koeto v osnovite si e
+variant 3.
+
+Parvo triabva malko da doutochnia neshtata po v duha na HGDB. Pita me
+kakvo sa tochno atoms. Ami obshto vzeto vsichko smisleno koeto se zapisva
+v HGDB, tova sa atoms. Vkluchitelno i vsichki types. I primitive types i
+te sa atoms. Razgleda li samia layout na dannite v Berkeley DB? Vseki atom
+se zapisva kato array ot UUIDs (handles):
+
+atom -> type_handle, value_handle, target_1, ..., target_n
+
+tozi type_handle e handle kam atom sashto i kato napravish
+
+hypergraph.get(type_handle), to shte ti varne niakav Java obekt 'x', koito
+e instanceof HGAtomType. Tozi x moje samia toi da bade zapisan v HGDB i
+togava negovia type narichame "type constructor". Type constructor e
+niakav atom, koito e instance na HGAtomType i chiito 'make' metod vrashta
+sashto instances na HGAtomType. Primera za tazi situacia e
+RecordTypeConstructor, koito manage-va RecordType, koito manage-va
+Records, koito sa arrays of Slots.
+
+Za XML Schema, requirements sa obshto slednite:
+
+1) vazmojnost da se import-va XML Schema v HGDB
+2) vazmojnost da se import-vat dannite, koito sledvat opredelena XML
+Schema v HGDB
+3) Runtime Java predstaviane i na schema types i na danni
+
+Parvo za samite XSD types. Znachi imash ot edna strana type names i ot
+druga samite types. Type names reshihme che shte sa links mejdu namespace
+i local name:
+
+type name = XML namespace + local name = link(XMLNamespace, XMLLocalName)
+
+Sled tova imashe samite XML Schema types, koito triabva da badat
+predstaveni kato HGAtomTypes. T.e. na vseki XML Schema type triabva da
+otgovaria edin HyperGraph atom, koito da e HGAtomType. Tozi correspondance
+mejdu XML Schema type names i HyperGraph types sashto e link:
+
+XSDTypeImpl = link(XSDTypeName, HGAtomType)
+
+Znachi niakva XML type sistema se load-va kato se loadnat vsichkite type
+names i kato se postroiat HGAtomType atomi i se link-vat zaedno. Samoto
+postroiavane na HGAtomType atomi triabva da pokrie izskvaniata na schema
+spec-a. Naprimer, ako StringType moje da se link-ne direktno s #string
+built-in-a na XML Schema, tova e prekrasno. Sashtoto i s integer i raznite
+drugi osnovni. Naprimer XMLskia 'anyType' sigurno otgovaria na
+hypergraph-skia 'Top'. Kogato obache niama sashtestvuvasht HyperGraph
+type, triabva da se napravi nov. Tozi nov type moje da bade ili
+preprogramiran chisto i prosto kato niakav implementation na HGAtomType,
+ili da bade sazdaden runtime chrez type constructor (pak implementation na
+HGAtomType). Type constructora moje da raboti po nai-razlichni nachini i
+tam e trudnostta malko. Spored shte imashe type constructors za SimpleType
+i za ElementType i tezi type constructors shte polzvat meta data da
+sazdadat konkretnite types v runtime (kakto pravi RecordTypeConstructor).
+A pak za tezi derived types deto se veche v spec-a, shte e malko trudno
+zashtoto samite restrictions sa dosta specifichni za base type-ovete.
+Mogat li vsichki XSD derived types da bade opredeleni polzvaiki tehnis
+<simpleType> tag? Ako da, togava niamash nujda ot nito edin ot tezi
+XSDDerivedXXX ili XSDModelDerivedType abstrakcii. Prosto imash XSD
+primitives (i kadeto mojesh preizpolzvash sashtestvuvashti HGAtomTypes) i
+derived chrez <simpleType> ili <complexType> i tova e. I vsichko stava
+chrez XSDSimpleTypeConstructor i XSDComplexTypeConstructor. A vrazkata
+base vs. derived triabva da bade predstavena ot HGSubsumes links, koito se
+polzvat kato representation na inheritence za Java class-ove.
+
+Za da mogat da se load-vat XSD danni, triabva i niakade da se dobavi kam
+interface-i niakade, ne znam kade, parse-ing na samite stoinosti. Shte ima
+niakav XML loader deto shte parse-va celia dokument, no sled tova
+individualnite types shte triabva da mogat da priemat String
+representation. Tova e paralelen malak design problem.
+
+Sega, samoto Java runtime predstaviane na danni: kadeto ima veche sazdaden
+Java class, koito varhi rabota, spored men toi triabva da se polzva,
+inache da se sazdava nov takav. Ne mislia che triabva naprimer
+'normalizedString' type da raboti s niakav nov Java string class, ami
+prosto triabva da si vrashta java.lang.String. Inache v negovia 'store'
+metod shte triabva da pravi check che string-a e normalized naistina i da
+throw-va outofrange exception ako ne e.
+
+S tova, po-gotov li si da zapochnesh? Parvoto neshto e da se pokriat
+vsichki primitives, nikoi ot koito veche sa pokriti v Java primitive
+types. Ama niakoi naprimer (anyURI, vsichki tezi date related ne sa). Sled
+tova da se napraviat SimpleTypeConstructor i ComplexTypeConstructor. Dotuk
+vaobshte niamash nujda da se zanimavash s XML namespaces/type names. Tiah
+gi dobaviash kato step 3. I shte triabva niakav config file s predefined
+links na builtin type names kam builtin types da moje da se load-va. I
+sled tova parsing na XML Schema docs i load na XML danni. Kak zvuchi?

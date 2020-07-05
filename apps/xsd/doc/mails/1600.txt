@@ -1,0 +1,19 @@
+Monday, March 26, 2007 6:02 PM
+
+>>po-tochno? kak biha izglejdali classovete?
+>
+> V prednia mail ti pisah, che porazmislih shtoto ne vidiah benefit-a i
+> zashtoto e memory inefficient. XSDTypeName da ima link kym XMLNamespace si
+> izglejda dobre (a moje bi link da e bidirectional, XMLNamespace da sochi
+> kym
+> XSDTypeNames). Za niakoi lookups moje bi shte pomogne, ako se vyvedat HG
+> type aliases ot roda "http://www.w3.org/2001/XMLSchema#string".
+
+Mda, i az mislia che mai e po-dobre s links da se raboti, kato stava duma
+za namespaces. Obache verbaliziraneto e malko po-razlichno ot nachina, po
+koito ti go kazvash: ne e XSDTypeName da ima link kam XMLNamespace, ami
+po-skoro "sashtestvuva link mejdu XSDTypeName i XMLNamespace" ;)
+
+Ot druga strana, samoto poniatie na XSDTypeName moje bi se obezmislia, i
+linka da bade direktno mejdu namespace i samia type (koito da ima local
+name kato atribut).

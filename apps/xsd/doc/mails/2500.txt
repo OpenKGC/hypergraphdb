@@ -1,0 +1,20 @@
+Monday, April 30, 2007 6:03 PM
+
+> Imam edin stranichen problem, kojto sega mu se chudia. Pri povtoren run
+> sled
+> pyrvonachalnoto syzdavane na database, kogato dobaviam testovo value s
+> niakakyv XSD type v HG.addNode->indexByType.addEntry Berkeley db.put
+> prosto
+> hang-va. Nikakvi crashes, exceptions. Vidiah vyv forum, che pitash za
+> niakakyv hang - pri kakva operatsia ti se e sluchval / imash li
+> suggestions
+> ?
+
+Tova obiknoveno si e nasha vina. Poluchava se, kogato ne se zatvori BDB
+cursor (t.e. HGSearchResult niakav ne se zatvori). Vseki BDB cursor darji
+'read lock' na daden page ot B-tree-to. I tezi read locks sa persistent, v
+edin lock table. Zatova dori i sled kato restirash app, to pak shte
+hang-va. Kogato ima read lock, togava vseki write attempt shte blokira
+dokato ne se release-va read lock-a. (Policy-to na BDB e single writer,
+multiple readers). Znachi triabva da namerish kade si propusnal, ili kade
+az sam propusnal, finally block s rs.close() ;)

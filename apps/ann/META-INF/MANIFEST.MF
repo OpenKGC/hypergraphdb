@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Export-Package: org.hypergraphdb.app.ann;uses:="org.hypergraphdb.util,
+ org.hypergraphdb,org.hypergraphdb.query"
+Built-By: borislav
+Tool: Bnd-0.0.238
+Bundle-Name: HyperGraphDB Feed Foward Neural Network
+Created-By: Apache Maven Bundle Plugin
+Require-Bundle: org.hypergraphdb-hgdb
+Bundle-Version: 1.3.0.SNAPSHOT
+Build-Jdk: 1.6.0_27
+Bnd-LastModified: 1404704024870
+Bundle-ManifestVersion: 2
+Import-Package: org.hypergraphdb,org.hypergraphdb.app.ann,org.hypergra
+ phdb.query,org.hypergraphdb.util
+Bundle-SymbolicName: org.hypergraphdb-hgdbann;singleton:=true
+

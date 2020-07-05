@@ -1,0 +1,12 @@
+Monday, March 19, 2007 11:33 PM
+
+> Veroiatno B se "registrira" kato atom type s HGDB. Ne bi li moglo tova da
+> se
+> izpolzva kato kriterij, che A.b e otdelen atom ? I naprimer chrez niakakyv
+> HGDB link da se ustanovi otnoshenieto (symbolic, hard, floating, etc.)
+> mejdu
+> A i B ?
+
+Vseki class se registrira avtomatichno kato atom type. Taka che tova ne
+moje da bade kriterii. Mogat da se zapisvat razni Bs kato atomi, a pak
+drugi Bs mogat da sa prosto chasti ot value-to na niakav drug atom.

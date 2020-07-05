@@ -1,0 +1,16 @@
+Monday, April 2, 2007 5:17 PM
+
+> Zdravej,
+>
+> Pri definitsiata na HGPredefinedTypes.BYTE_ARRAY UUID-to ima edin trailing
+> space. Ne sym go commit-val fix-nato.
+
+ok, commit-nah go...imai v predvid che tozi class ne se polzva nikade oshte
+
+mislia che go dobavih s ideiata da zamenia config/org/hypergraphdb/types
+file-a, no shte ne e napraveno tova
+
+> Predpochitash tab chars da se zapazvat v source i tab size da e 4 spaces ?
+
+predpochitam _no_ tabs chars i 4 spaces vmesto tabs, {} brackets na new
+line, extra space okolo arithmetic operators i t.n. ;)

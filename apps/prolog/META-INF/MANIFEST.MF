@@ -1,0 +1,41 @@
+Manifest-Version: 1.0
+Export-Package: alice.tuprolog.clausestore;uses:="org.hypergraphdb.que
+ ry,alice.tuprolog.lib,org.hypergraphdb,org.hypergraphdb.atom,alice.tu
+ prolog,org.hypergraphdb.util,alice.util",alice.tuprolog.hgdb;uses:="a
+ lice.tuprolog.clausestore,alice.tuprolog.lib,org.hypergraphdb.app.man
+ agement,org.hypergraphdb.handle,org.hypergraphdb.util,org.hypergraphd
+ b.type,org.hypergraphdb.query,org.hypergraphdb.indexing,org.hypergrap
+ hdb.atom,org.hypergraphdb,alice.tuprolog,org.hypergraphdb.transaction
+ ",alice.tuprolog.lib;uses:="alice.tuprolog.clausestore,org.hypergraph
+ db,alice.tuprolog,alice.util",alice.tuprologx.runtime.tcp;uses:="alic
+ e.tuprolog",alice.util.jedit;uses:="javax.swing.undo,javax.swing.text
+ ,javax.swing.event,javax.swing",alice.tuprologx.ide;uses:="javax.swin
+ g.event,javax.swing.text,alice.util.jedit,alice.util.thinlet,javax.sw
+ ing.undo,alice.tuprolog.event,alice.tuprolog,javax.swing.filechooser,
+ javax.swing,alice.util",alice.util.thinlet,alice.tuprolog.event;uses:
+ ="alice.tuprolog",alice.tuprologx.runtime.corba;uses:="org.omg.CORBA,
+ org.omg.CosNaming,alice.tuprolog,org.omg.CORBA.portable",alice.tuprol
+ og;uses:="alice.tuprolog.clausestore,alice.tuprolog.event,alice.util"
+ ,alice.tuprologx.runtime.rmi;uses:="alice.tuprolog",alice.tuprologx;u
+ ses:="alice.tuprolog.event,alice.tuprolog,javax.script,javax.swing",a
+ lice.util
+Bundle-SymbolicName: org.hypergraphdb-hgdbprolog;singleton:=true
+Bundle-Name: HyperGraphDB Prolog
+Bundle-Version: 1.4.0.SNAPSHOT
+Built-By: chenxm
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1487465719668
+Import-Package: alice.tuprolog,alice.tuprolog.clausestore,alice.tuprol
+ og.event,alice.tuprolog.hgdb,alice.tuprolog.lib,alice.tuprologx,alice
+ .tuprologx.ide,alice.tuprologx.runtime.corba,alice.tuprologx.runtime.
+ rmi,alice.tuprologx.runtime.tcp,alice.util,alice.util.jedit,alice.uti
+ l.thinlet,javax.script,javax.swing,javax.swing.event,javax.swing.file
+ chooser,javax.swing.text,javax.swing.undo,org.hypergraphdb,org.hyperg
+ raphdb.app.management,org.hypergraphdb.atom,org.hypergraphdb.handle,o
+ rg.hypergraphdb.indexing,org.hypergraphdb.query,org.hypergraphdb.tran
+ saction,org.hypergraphdb.type,org.hypergraphdb.util,org.omg.CORBA,org
+ .omg.CORBA.portable,org.omg.CosNaming
+Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-0.0.238
+Build-Jdk: 1.8.0_252
+

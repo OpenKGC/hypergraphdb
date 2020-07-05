@@ -1,0 +1,33 @@
+Monday, May 28, 2007 12:12 AM
+
+zdrasti,
+
+emi tozi podhod mi se struva pravilen...edin vid imash niakvi opcode
+templates, zvuchi dobre ;)
+
+
+
+> -----Original Message-----
+> From: Mihail Marinov [mailto:liahim@hotmail.com]
+> Sent: Sunday, May 27, 2007 4:22 PM
+> To: borislav@kobrix.com
+> Subject: Update.
+> 
+> Hi,
+> 
+> Vkliuchih bytecode generation na restrictions evaluation routines i
+> dobavih
+> test cases za pyrvia type (decimal) za kojto tova se pravi i pyrvia
+> facet
+> (minInclusive).
+> 
+> Samiat bytecode generation go napravih s ASM - pozvoliava mi da rabotia
+> pochti napravo s opcodes i ot tam pravi rabotata po-prosta. Pone pri
+> moia
+> podhod pri kojto napisvam source kakto bih iskal da byde i sled tova se
+> opitvam da match-na decompiled class. Shte vidim kakvo polzva Bizi i
+> shte
+> opitam syshtoto.
+> 
+> Chao,
+> Misho.

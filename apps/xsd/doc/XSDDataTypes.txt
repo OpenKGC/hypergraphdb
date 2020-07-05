@@ -1,0 +1,14 @@
+XML Schema has a fairly standard approach to typing. There is a set of well-defined
+primitive types which corresponding to a specific range of values. And there are
+means to construct complex types. Each type, wheather primitive or complex is
+uniquely identified in the global XML namespace schema of things (i.e. by a 
+[URI, localLabel] pair usually written as http://blabla.blaba.com/somenamespace#somename).
+
+
+The representation of XML Schema types in HyperGraph works as follows:
+
+- Each and every XML Schema type has a corresponding atom which is a HGAtomType. 
+- The runtime instance of the XSD primitive types are constructed by a XSDPrimitiveType 
+constructor which has a statically defined mapping between their persistence handles
+and run-time singletons. 
+- XML Schema Derived types

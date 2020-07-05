@@ -1,0 +1,50 @@
+Monday, March 19, 2007 11:33 PM
+
+>>class A
+>>{
+>>   private B b;
+>>
+>>   getB() ...
+>>   setB(B b)...
+>>}
+>>
+>>da moje A.b da e atom v HGDB, a ne samo chast ot value-to na A. Za celta
+>>ima niakvi osnovi pod formata na HGAtomRef. Obache mi se izka
+>>persistence-a da e minimalno intrusive v Java API-a tova oslojniava
+>>neshtata dosta. No mi e sledvashtata zadacha za HyperGraph. Strategiata
+>> mi
+>>e gore dolu slednata:
+>
+> Ne bi iskal B da "znae" po niakakyv nachin za HGAtomRef ? Ne bi iskal B da
+> e
+> HGAtomRef, kojto sochi kym istinskoto B ?
+
+Bih izkal nito B nito A da znaiat za HGAtomRef, a tova da stava
+transparantly: kogato A se zapisva v HGDB, ne se zapisva value-to na B
+direktno, ami se zapisva HGPersistentHandle, koito sochi kam B. A pak B
+slot-a na A e s type HGAtomRef.
+
+>>2) Triabva niakav nachin da se zakachat HGHandle kam Java reference taka
+>>che, kogato se podade:
+>>
+>>A.setB(someB)
+>>
+>>da moje da se razbere dali someB veche e v HyperGraph i ima saotveten
+>>HGHandle, ili triabva da se dobavi nov.
+>
+> Tuk shte te pomolia da mi pokajesh kakvo se tseli s tova. Inache pyrvoto,
+> koeto si mislia e che zashto tova da stava at use time, a ne kogato se
+> persist-va ?
+
+Prav si, kogato se persist-va triabva da stane. Problem se svejda do
+slednoto: ako imash HGHandle, mojesh da se dokopash do atom-a (Java Object
+reference), obache obratnoto ne ti e garantirano. V atom cache-a ima
+mapping  Java Object->HGHandle, obache kato se natovari cache-a e i se
+evict-nat razni atoms, e vazmojno da se zagubi mapping ot vse izpolzvani
+Objects kam tehnite HGHandles.
+
+Ideiata mi v momenta e prosto da napisha nov cache, koito da polzva
+java.lang.ref.WeakRef i da track-vam koga se garbage collect-vat HG atoms
+i da gi maham ot cache-a sashto. Shtoto v momenta az pravia razni
+shmekerii da potdarjam cache-a na opredeleno nivo i da chistia atomi ot
+tam ot vreme na vreme.

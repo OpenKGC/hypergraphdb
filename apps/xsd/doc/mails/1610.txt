@@ -1,0 +1,70 @@
+Wednesday, May 23, 2007 6:55 AM
+
+> >
+> >Za vaprosite ti:
+> >
+> >1) Da, tova bi triabvalo da svarshi rabota. Az shte poopravia malko
+> >HGTraversal implementations shtoto moje bi tova api e po-dobar variant
+> >kogato triabva da se razhodish po niakav "link chain". Kakav ti e
+> tochno
+> >use case-a?
+> >
+> 
+> Ima HGSubsumes relationship mejdu XSD primitive type i konkretnia Java
+> class, s chijto obekti user raboti. Niakakyv derived by restriction
+
+Tova ne go razbiram: ima HGSubsumes mejdu type i negovia instance? Ako e
+taka, tova e opredeleno greshno. HGSubsumes moje da ima samo mejdu atomi na
+edno "typing" nivo: ili mejdu instances, ili mejdu types, ili mejdu type
+constructors i t.n. HGSubsumes modelira "extends/implements"...classove
+hierarhia, predicate e, koito opredelia koga neshto moje da se polzva vmesto
+neshto drugo. Ako imash type T i nego instance O, ne mojesh da kajesh che O
+moje da se polzva vmesto T ili obratno. 
+
+> type ot
+> tozi XSD primitive moje da stigne do svoia generic chrez HGSubsumes ot
+> negovata definitsia, no za da stigne nakraia do pyrvichnia HGSubsumes i
+> Java
+> class-a, triabva da nameri generic za svoia generic etc. Tova ne e
+> neshto,
+> koeto sym obmislil dobre dali e ok da e taka (daje imam niakoi
+> symnenia), no
+> za momenta taka rabotiat neshtata.
+
+Chres subsumes links mojesh da obhodish cialata types hierarchia. Ako te
+interesuva da tragnesh ot niakav type T i da minesh prez vsichki negovi
+super-types chak do Top (koeto se map-va kam java.lang.Object), mojesh da
+napravish slednoto. Davam primer s HashMap:
+
+HGHandle hashMapType = hg.getTypeSystem().getHandle(HashMap.class);
+HGTraversal traversal = new HGDepthFirstTraversal(mt, new
+DefaultALGenerator(hg, new AtomTypeCondition(HGSubsumes.class), null, true,
+false, false)); // razgledai Javadocs na DefaultALGenerator i
+HGDepthFirstTraversal da vidish kak raboti tova
+
+// slednoto printira celia graph traversal pod format "link -> sibling"
+while (traversal.hasNext())
+{
+    Pair<HGHandle, HGHandle> x = traversal.next();
+    HGLink link = hg.get(x.getFirst());
+    System.out.println(hg.get(link.getTargetAt(1)) + "->" +
+hg.get(x.getSecond()));
+}
+
+shte ti dade slednoto:
+
+org.hypergraphdb.type.MapType@1f4ff23->class java.util.AbstractMap
+class java.util.AbstractMap->org.hypergraphdb.type.Top@949f69
+class java.util.AbstractMap->interface java.util.Map
+org.hypergraphdb.type.MapType@1f4ff23->org.hypergraphdb.type.SerializableTyp
+e@4589eb
+org.hypergraphdb.type.MapType@1f4ff23->interface java.lang.Cloneable
+org.hypergraphdb.type.MapType@1f4ff23->interface java.util.Map
+
+poneje pravim "depth-first traversal", parvo se stiga ot type-a na HashMap
+(MapType) do "Top" direktno. I sled tova drugite subsumes vrazki sa
+list-vani.
+
+Tzi kod raboti s poslednia mi commit...kadeto napravih promiana traversalite
+da vrashtat ne samo obhodenite atomi ami link-ovete kam tiah. Zatova
+traversal.next() vrashta Pair<HGHandle, HGHandle>, a ne samo HGHandle.

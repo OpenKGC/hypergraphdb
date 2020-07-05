@@ -1,0 +1,6 @@
+Monday, May 28, 2007 1:52 PM
+
+Zdrasti Misho,
+Emi i az se opitah kato teb s  cglib, no byrzo se otkazah pokraj tazi totalna lipsa na documentazia okolo nego, pyk i niakyde iz foruma sreshnah syvet ot samiat avtor, che po-dobre e da se izpolzva ASM za dynamic code generation na bean-like patterns.
+Ot ASM sym mnogo dovolen zasega i osobeno ot plugina mu za Eclipse, kojto ti generira pochti napravo neobhodimia code. V combinatzia s DJ Java Decompilera, mislia che niama da imash nikakvi problemi:)
+Hajde zasega, Bizi.

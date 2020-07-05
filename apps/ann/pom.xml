@@ -1,0 +1,65 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.hypergraphdb</groupId>
+    <artifactId>hgdbapps</artifactId>
+    <version>1.4-SNAPSHOT</version>  
+  </parent>  
+  <properties>
+    <packageit>bundle</packageit>
+    <bundle.symbolicName>${groupId}-${artifactId};singleton:=true</bundle.symbolicName>
+    <bundle.namespace>org.hypergraphdb.app.ann</bundle.namespace>    
+  </properties>
+  <packaging>${packageit}</packaging>  
+  
+  <artifactId>hgdbann</artifactId>
+  <name>HyperGraphDB Feed Foward Neural Network</name>
+
+ <repositories>
+    <repository>
+      <id>hypergraphdb</id>
+      <url>http://hypergraphdb.org/maven</url>
+    </repository>
+ </repositories>
+ 
+  <dependencies>
+	<dependency>
+	  <groupId>org.hypergraphdb</groupId>
+	  <artifactId>hgdb</artifactId>
+	  <version>${version}</version>
+	</dependency>	
+  </dependencies>
+  <build>
+   <plugins>
+     <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifestFile>META-INF/MANIFEST.MF</manifestFile>
+          </archive>
+        </configuration>
+     </plugin>   
+    <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <version>1.4.0</version>
+        <extensions>true</extensions>
+        <configuration>
+ 		  <manifestLocation>META-INF</manifestLocation>        
+          <instructions>
+            <Bundle-SymbolicName>${groupId}-${artifactId};singleton:=true</Bundle-SymbolicName>
+            <Bundle-Name>${project.name}</Bundle-Name>
+            <Bundle-Version>${project.version}</Bundle-Version>
+            <Export-Package>org.hypergraphdb.app.ann.*</Export-Package>
+            <Import-Package>org.hypergraphdb.*</Import-Package>
+            <Require-Bundle>${groupId}-hgdb</Require-Bundle>
+          </instructions>
+        </configuration>
+    </plugin>     
+    </plugins>
+  </build>   
+</project>

@@ -1,0 +1,16 @@
+Monday, April 30, 2007 6:07 PM
+
+> Za men e tova syshto, no ne chak dosadno vse oshte - prosto neizbejna
+> dopylnitelna rabota. Razbiram dobre sega zashto predi vreme spomena za
+> eventualno modifitsirane na user classes da dyrjat i handle. Lichno na men
+> mi lipsva method na HGHandle, kojto da vyrne syotvetnia "payload object" -
+> niakakyv weak ref ili neshto podobno.
+
+Modifikaciata, koiato spomenah e po-skoro za obratnata vrazka: ot
+java.lang.Object to HGHandle. Prichinata e che v momenta tia se
+osashtestviava chrez cache-a. A cache-a moje da reshi da evict-va razni
+obekti, kogato se napalni. I kogato evict-va, mapping-a mejdu Object i
+HGHandle izchezva, bez dori samia Object da e garbage collect-van. Zatova
+savsem skoro shte napisha nov cache, koito e izcialo baziran na WeakRefs,
+taka che tozi eviction-a da se pravi samo kogato i samia Java object se
+garbage collect-va.

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<topicMap version="2.0" xmlns="http://www.topicmaps.org/xtm/">
+<topic id="xtm">
+  <subjectIdentifier href="http://psi.example.org/xtm/2.0"/>
+  <instanceOf>
+    <topicRef href="#syntax"/>
+  </instanceOf>
+  <name>
+    <value>XTM 2.0</value>
+  </name>
+  <occurrence>
+    <type>
+      <topicRef href="#status"/>
+    </type>
+    <resourceData>International Standard</resourceData>
+  </occurrence>
+</topic>
+<topic id="xtm-spec">
+  <subjectLocator href="http://www.isotopicmaps.org/sam/sam-xtm/"/>
+  <instanceOf>
+    <topicRef href="#specification"/>
+  </instanceOf>
+  <name>
+    <value>XTM 2.0 specification</value>
+  </name>
+  <occurrence>
+    <type>
+      <topicRef href="#publication-date"/>
+    </type>
+    <resourceData datatype="http://www.w3.org/2001/XMLSchema#date">2006-06-19</resourceData>
+  </occurrence>
+</topic>
+<association>
+  <type>
+    <topicRef href="#specified-in"/>
+  </type>
+  <role>
+    <type>
+      <topicRef href="#specified"/>
+    </type>
+    <topicRef href="#xtm"/>
+  </role>
+  <role>
+    <type>
+      <topicRef href="#specification"/>
+    </type>
+    <topicRef href="#xtm-spec"/>
+  </role>
+</association>
+</topicMap>

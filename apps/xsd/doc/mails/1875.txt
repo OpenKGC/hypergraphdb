@@ -1,0 +1,13 @@
+Monday, March 26, 2007 9:16 PM
+
+> Pri kojto i da e design variant klonia dosta da stypia vyrhu JavaBinding
+-
+> naprimer XSDString da ima "intimna" vryzka sys StringType. Ako ima drug
+language binding bi bilo problem, ot druga strana ima pripokrivane.
+Kakvo
+> mislish ?
+
+Moje savsem spokoino XSDString i StringType da sa edno i sashto. Nali XML
+strings sa si unicode character sequences? Entity encoding-a ima li niakva
+specialna rolia v XML string-ove? Naprimer XML stringa 'bla&gt;foo' na koi
+"normalen" Java string otgovaria: 'bla&gt;foo' ili 'bla>foo'?

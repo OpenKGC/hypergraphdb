@@ -1,0 +1,57 @@
+Monday, April 23, 2007 10:17 PM
+
+>> > 	//restriction link
+>> >   FacetsDescriptor facets = new FacetsDescriptorBase();
+>> >   facets.addFacet(whiteSpace);
+>> >
+>> >   HGValueLink restrictionLink = new HGValueLink(facets,
+>> >       new HGHandle[]
+>> >       {aHandle});
+>> >   hg.add(restrictionLink);
+>>
+>>Tova ne razbiram? Zashto se pravi restriction link kam STC? Restriction e
+>>kam niakav instance na STC (t.e. kam niakav SimpleType, a ne kam samia
+>>SimpleTypeConstructor).
+>
+> Polzvam go kato placeholder poveche ot kolkoto drugo. Inache po vreme na
+> import nali zapisvame vryzkite na bazata na koito posle da se generira
+> SimpleType class-a. Smenih go da add-vam null s tip STC i izpolzvam tozi
+> handle v links:
+>
+> HGHandle aHandle = hg.add(null, SimpleTypeConstructor.HANDLE);
+>
+> E li tova reshenie ? Ako stc instance i null ne stava - kakvo drugo ? Nali
+> ST class shte se generira na bazata na metainfo-to, koeto se import-va -
+> niama kak da uchastva direktno v tezi links, ili ?
+
+Da, tova mi zvuchi kato pravilno reshenie. Ako niama nishto, koeto imash
+nujda da zapisvash kato 'value', to 'null' e napalno legitimna stoinost, i
+SimplyTypeConstructor moje prosto da vrashta
+'HGHandleFactory.nullHandle()' kato handle na value-to i vaobshte da ne
+triabva da pishe neshto v store-a.
+
+> Drug vypros otnosno HGRel i HGRelType. Za restriction vse oshte polzvam
+> HGValueLink, no se biahme razbrali, che tova triabva da se predstavi s
+> HGRelXxx. Ta koe ot dvete - mislia si che HGRel e appropriate v tozi
+> sluchaj
+> - facets + st ?
+
+emi ne znam: HGRel predstavliava instance na niakav "named", "attribute
+free" relationship (t.e. samo imeto i arity-to na relationship-a sa
+vajni). Ako tova sluji za predstaviane na facets ili na vrazkata mejdu
+facets i XSD types, davai.
+
+> Btw, kato se opitam da dobavia HGRel stigam do tozi exception:
+> org.hypergraphdb.HGException: Could not create HyperGraph for class
+> 'org.hypergraphdb.atom.HGRel'
+
+
+Parvo triabva da imash HGRelType sazdaden:
+
+HGRelType relType = new HGRelType(name, targetSetTypes);
+HGHandle relTypeHandle = hg.add(relType);
+hg.add(new HGRel(name, targetSet), relTypeHandle);
+
+
+a to ne moje da sazdade type avtomatichno zashtoto HGRel e instanceof
+HGLink, bez da ima constructor s signature HGRel(HGHandle [] targetSet)

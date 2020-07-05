@@ -1,0 +1,27 @@
+Monday, March 26, 2007 7:04 PM
+
+> --- Razni vyprosi kym teb.
+> Do kolko triabva da se syobraziavam s memory cost pri linking? Naprimer
+> onova predlojenie vsichki XSD data types da sa link-nati i taka da
+> formirat
+> namespace-a si - osven, che ne moga da dam niakakyv benefit osven (ab)use
+> na
+> links to bi bilo dosta memory inefficient. E li e vajen aspekt, kojto da
+> se
+> otchita pri design ili e vypros na optimizations na po-kysen etap?
+
+Ne mislia che linking e tolkova po memory inefficient ot drugia variant
+(shtoto nested beans sashto se zapisvat chrez niakav low-level linking).
+Vaobshte ne triabva da se saobraziavash s memory cost pri linking. Linking
+triabva da e osnovnata sila na HGDB i kakto ti kazah mnogo se interesuvam
+ot tova da sazdadem design practices na bazata na "semantic" linking, i da
+se namali nujdata ot OO modelirane. Kogato rabotish s Java e mnogo udobno
+vsichko da bade vkarano v niakav OO shema, chisto i prosto zashtoto samia
+ezik taka e organiziran. Za da namerish kakvo e link-vano s kakvo drugo,
+triabva niakav HG query da pravish i da dereference-vash HGHandles i pr.,
+niamash ezikovi konstrukcii, koito da napraviat rabotata s links
+estestvena. Zatova kazvam che runtime Java representation vinagi moje da
+si bade niakva OO struktura, no v HyperGraph moje da e po-razlichno. Za
+momenta vsichki mappings ot Java strukturi kam HGDB sledvat OO modela,
+koeto e konservativen approach za da moje da bade polezen HGDB, a ne
+zashtoto mislia che e "the right way".

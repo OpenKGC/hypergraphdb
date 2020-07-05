@@ -1,0 +1,59 @@
+Date: Tues, Jul 31 2007 8:37 pm
+From: Borislav
+
+
+Hi all,
+
+I added two notable things today:
+
+1) a HyperGraph.update(Object atom) method that is essentially
+equivalent to replace(getHandle(atom), atom). It updates an atom whose
+has changed at run-time. Calling this method is not necessary if the
+atom is managed, of course.
+
+2) A new annotation org.hypergraphdb.annotation.HGIgnore that can be
+used to indicate that a certain bean property is not be persisted
+(i.e. no Record slot is created for it when a HG type is generated for
+the bean class). This can be used to annotate either the field, or the
+setter, or the getter, it doesn't matter, all are checked. For
+example:
+
+public class MyBean
+{
+  private String s;
+  @HGIgnore
+  private int i;
+
+  public set/getI...
+  pubic set/getS
+
+  @HGIgnore
+  public A getA() { use other internal state to obtain an A}
+  public void setA(A a) { change internal state based on 'a' }
+}
+
+
+here both the 'i' and 'a' bean properties are ignored. The intent is
+mainly for cases like the 'a' property here, where a getter and setter
+are defined for something that can be obtained by other means and does
+not belong to the bean data per se.
+
+Naturally, following the principle of "lesser API intrusiveness", the
+same effect can be achieved without the annotation, by changing the
+RecordType created for MyBean:
+
+JavaBeanBinding beanType =
+(JavaBeanBinding)graph.getTypeSystem().getAtomType(MyBean.class);
+SlotType slotType =
+(SlotType)graph.getTypeSystem().getAtomType(Slot.class);
+Slot aSlot = new Slot("a",
+graph.getTypeSystem().getTypeHandle(A.class));
+HGSearchResult rs = slotType.find(aSlot);
+((RecordType)beanType.getHGType()).remove(rs.next());
+rs.close();
+graph.update(beanType.getHGType());
+
+The above code first finds the slot corresponding the the 'a' bean
+property and removes it from the RecordType of the bean.
+
+Boris

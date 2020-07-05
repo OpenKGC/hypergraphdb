@@ -1,0 +1,27 @@
+Tuesday, April 10, 2007 11:03 PM
+
+Facets stuff looks good, obache ima mai edno osnovno nedorazbirane za
+vrazkata SimpleTypeConstructor/SimpleType: SimpleTypeConstructor e tozi
+koito generira classes on-the-fly, a ne SimpleType. SimpleType e
+generirania class! Znachi SimpleTypeConstructor.make generira singleton
+class i vrashta negovia edinstven instance. Zatova mu triabva incidence
+set. Da kajem che imash:
+
+X - atom koito e niakav SimpleType
+type(X) - SimpleTypeConstructor
+value(X) - unused
+targetSet(X) - unused
+incidenceSet(X) - razni link mejdu X i negovia base type, facets i t.n.
+
+SimpleTypeConstructor.make defacto shte polzva samo incidenceSet
+parametera si. Osven ako ne reshish da slojish niakva informacia vav
+value-to sashto.
+
+Zashto predpochitam info-to za simple type-a da bade predstaveno chrez
+link-ove socheshti kam nego, vmesto chrez negovi "targets". Zashtoto taka
+mi se struva pravilno konceptualno. Intuitivno kogato L e link s targets
+(X,Y), L e na niakvo "meta" nivo spriamo X i Y, L se otnasia _za_ X i Y.
+Znachi ako simpletype e link, koito sochi kam base type-a, izliza che toi
+e na niakvo meta nivo spriamo base type-a si, pone spored moiata intuicia
+za tova kak links triabva da se polzvat. Pri vsichki polojenia, vrazkata s
+base type triabva da bade predstavena chrez HGSubsumes za consistency.

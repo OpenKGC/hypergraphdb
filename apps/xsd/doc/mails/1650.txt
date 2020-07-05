@@ -1,0 +1,27 @@
+Monday, March 26, 2007 9:16 PM
+
+> Atom e kojto i da e user Object ili HG link ? Vypreki, che smiatam che
+razbiram dokumentsiata niakak si mi lipsva HGAtom iface. I pri vse che
+HGHandle e iasno definiran kato reference kym atom imam useshtaneto, che
+vsyshtnost toj e HGAtom.
+
+HGHandle e pointer. Atoms sa entities, koito se zapisvat v HGDB chrez
+HyperGraph (HyperGraph.add/get/replace etc.) class-a: imat type, value i
+target set. Mogat da badat links, no mogat da badat i savsem obiknoveni
+obekti. Naprimer chisloto 3 si e chislo i niakva stoinost, koito moje da
+bade property na niakav record. Obache ako napravish:
+
+hypergraph.add(3)
+
+dobaviash atom v HGDB chiito type e "IntType" i chieto value e "3" i koito
+niama target set nikakav. Mojesh da dobavish i drug atom, kadeto 3 e link:
+
+hypergraph.add(new HGValueLink(3, new HGHandle[] { .... })
+
+HGValueLink ti pozvoliava da pravish links ot niakvi Java obekti bez te da
+implementirat HGLink interface.
+
+Atom se neshata kam koito moje da se link-va (vkluchitelno i link-ovete).
+V tiahnata persistent forma, atomite sa danni v HGStore-a i raznite
+indexi. V tiahnata runtime forma, atomite sa Java obekti. Kato se napravi
+C++ binding na HGDB, shte badat i C++ obekti v runtime.

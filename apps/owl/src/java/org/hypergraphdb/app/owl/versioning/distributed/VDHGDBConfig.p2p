@@ -1,0 +1,11 @@
+{
+"interfaceType"	: "org.hypergraphdb.peer.xmpp.XMPPPeerInterface",
+"peerName"	: "HGDBPeer",
+"bootstrap" : [ {"class" : "org.hypergraphdb.peer.bootstrap.AffirmIdentityBootstrap", "config" : {}},
+                {"class" : "org.hypergraphdb.peer.bootstrap.CACTBootstrap", "config" : {}}
+              ],
+"interfaceConfig" : {
+    "autoRegister" : true,
+    "ignoreRoster" : true
+  }
+}

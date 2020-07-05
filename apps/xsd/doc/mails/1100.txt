@@ -1,0 +1,45 @@
+1. Monday, March 19, 2007 8:56 PM
+
+> Neiasnota za men predizvikva tova, che ot edna strana ostavam s
+> vpechatlenieto, che ideiata e da moje da se raboti edva li ne s POJOs i
+> potrebitel da ne ili pochti da ne polzva HGDB spetsifichni features v
+> svoia
+> code. Obache ot druga strana razbiram, che za da se vyzpolzva ot
+> kliuchovia
+> HGDB feature "linking" niakakvi explicit konstruktsii se/shte se nalagat.
+
+Dvete idei ne sa nesavmestimi. Raboti se i s dvete neshta. Ako imash POJO,
+bi bilo dobre da ne go capash s razni persistent neshta, i da si ostane
+POJO (to vsashnost tozi termin vaznikna kato opozicia na EJB...). Obache
+ako imash niakav link, togava niamash izbor da ne polzvash HGDB API.
+Koncepciata e types + values + links. A ako gledash samo na nivo HGStore,
+to imash samo links i nishto drugo. Mnogo dalgo vreme mislih kak i kade da
+se slojat razgranicheniata. I vse oshte ne e ochevidno za men koe kak
+triabva da se predstavia razni composite strukturi: dali kato po-slojni
+values ili vinagi chrez niakav linkage. Naprimer ako imash:
+
+class A
+{
+  String x;
+  B y;
+}
+
+mojesh da predstavish stoinostta na A kato niakvo aggregate values ot
+[x,y], a moje i da ia predstavish kato niakva graph struktura, kadeto x e
+atom, y e atom i imash dva linka: propertyOf(x, A), propertyOf(y, A). I
+dvata varianta mogat da badat totalno transparent za usera, zashtoto
+type-a na A se griji za predstavianeto v HyperGraph. Az reshih da
+implementiram parvia variant, zashtoto po tozi ne se populate-va HGDB s
+niakvi atomi, koito ne sa izrichno dobaveni ot usera. Ne znam tova dokolko
+e vajno. No sega kato napravish hg.add(a) za niakav plain bean 'a', si
+siguren che niamash novi atoms dobaveni. A pak za sluchaite kogato 'a' ima
+niakvo property, koeto e atom sashto, se spriah na tozi HGAtomRef pak
+spored sashtata logika: da ne se dobaviat atomi "behind the scenes". Ne
+znam kakvo se pecheli s tova....
+
+> V pyrvia sluchaj triabva da se pravi automatic data mapping i linking edva
+> li ne da se infer-va - vsichko tova eventualno se customize-va chrez razni
+
+Linking ne se infer-a nikoga, vinagi e izrichno zadaden ot usera. Ako ima
+niakvo infer-vane na links, to po-skoro tova bi bilo vav "vtoria" sluchai
+(tezi propertyOf links deto spomenah).

@@ -1,0 +1,19 @@
+Monday, March 19, 2007 11:33 PM
+
+>>
+>>Slojnoto na tova e che ne izkam da vavejdam poniatia kato primary keys,
+>>izkam edinstvenia key/reference kam atom da si ostane HGHandle. Ta,
+>>trick-a moje bi shte vkluchva niakav bytecode instrumentation sigurno.
+>>Kato se prochete obekt ot HGDB, da se instrument-va class-a i da mu se
+>>zakachi negovia HGPersistentHandle. No ne znam oshte, dosta slojen
+>> problem
+>>e.
+>>
+>
+> Zashto iskash da e samo chrez HGHandle ?
+
+Zashtoto primary keys ne e poniatie, koeto se vrazva dobre v tozi
+framework. I ako sluji za neshto, to shte e po-skoro na niakvo application
+nivo, a ne na "core data management" nivoto. Pone taka si mislia. Ne
+izkluchva niakvo vavejdane na primary keys v badeshte, no ne i na takova
+osnovno nivo.

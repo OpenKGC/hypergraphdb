@@ -1,0 +1,186 @@
+4/5/2007 8:02PM
+  
+Borislav says:
+kaji ako izkash da pogovorim za XSD...next steps i t.n.
+Mihail says:
+zdravej.
+Mihail says:
+sega tochno si misleh po poslednia ti mail.
+Mihail says:
+prosto oshte go analizirah.
+Borislav says:
+ok, moment da si go otvoria, che veche i az ne znam kakav mi beshe poslednia email  
+Borislav says:
+mda, emi zadavai vaprosi, na linia sam
+Borislav says:
+teritoriata si e malko nova i za men
+Borislav says:
+i zaradi tozi problem nai-veroiatno shte promenia interface na make metoda, da bade make(HGHandle valueHandle, HGHandle [] targetSet, HGHandle [] incidenceSet)
+Mihail says:
+ok, triabva da si priznaia, che ne go razbiram dobre tozi problem.
+Borislav says:
+razbirash li ideiata za type na type?
+Borislav says:
+type = value constructor
+Mihail says:
+da.
+Borislav says:
+type na type = type constructor
+Borislav says:
+ok
+Mihail says:
+na men mi prilichat tezi constructors mnogo na factories.
+Borislav says:
+ne sa
+Borislav says:
+vsashnost ne poveche ot kolkoto vseki edin drug type prilicha na factory
+Borislav says:
+znachi kakto StringType znae kak da zapisva i da prochita strings, taka i SimpleTypeConstructor znae kak da zapisva i prochita razni derived types
+Mihail says:
+ok. v dosta constructors ima hg.getTypeSystem().getAtomType calls. iavno tova ne vyrshi rabota, no zashto ?
+Borislav says:
+value-to na StringType e (instanceof String)
+Borislav says:
+a value-to na SimpleTypeConstructor e (instanceof HGAtomType)
+Mihail says:
+ok.
+Borislav says:
+kakva rabota triabva da svarshi tozi call?
+Borislav says:
+ideiata che kakto StringType ima niakav byte[], koito triabva da se dekodira kato edin CharacterSequence (t.e. String)
+Borislav says:
+taka i SimpleTypeConstructor triabva da dekodira razni links (restrictions i pr.) za da postroi HGAotomType instance
+Mihail says:
+vzema type, ne bi li moglo taka da se vzeme syotetnia link type, kojto triabva na constructor, za da napravi edin simpletype s vsichkite mu neshta.
+Borislav says:
+moje da se vzeme link type, ama ne i samia link
+Mihail says:
+ok, s drugi dumi do goliama stepen StringType e serializer/deserialzer (obyrnal sym vnimanie na subsumes method, taka che e poveche ot tova), a StringTypeConstructor e neshto koeto "osmislia" vyprosnoto value ?
+Borislav says:
+niama StringTypeConstructor
+Borislav says:
+govorish za SimpleTypeConstructor?
+Mihail says:
+ne, misleh si obshto za roliata na costructors.
+Borislav says:
+tia e sashtata kato tezi na types
+Borislav says:
+kazvam constructor za da podchertaia fakta che se manage-vat values,koito samite te sa HGAtomType instances
+Borislav says:
+inache stava duma za types
+Borislav says:
+naprimer StringType moje da bade prekrasten StringConstructor....
+Borislav says:
+a tazi terminologia za type constructors e ot funkcionalnite ezici....
+Borislav says:
+naprimer C++ templates sa type constructors
+Mihail says:
+ok, zashto na StringType ne mu e neobhodim Constructor? niama links ?
+Borislav says:
+zashtoto kato instantiate-vash template-a poluchavash nov type
+Borislav says:
+zashtoto StringType e predefined, veche e napisan koda v class-a org.hypergraphdb.type.StringType.java
+Borislav says:
+moje bi primera s C++ shte ti pomogne poveche?
+Borislav says:
+te sa si bash type constructors
+Mihail says:
+da.
+Mihail says:
+pomogna.
+Borislav says:
+prosto triabva da vijdash types malko po-abstraktno...kato niakvi values
+Borislav says:
+naprimer v Java class-at java.lang.Class naslediava ot java.lang.Object
+Borislav says:
+a java.lang.Class predstavliava niakav type i tova ne mu prechi da si niakvo value
+Borislav says:
+i javac e edin vid "type constructor", koito .java ti pravi .class  
+Mihail says:
+v java-ta tova e dosta po-ochevidno ot tuk  
+Borislav says:
+znachi ti triabva da napravish type constructor, koito niama .java, ama ima niakva meta informacia zapisana v HGDB
+Borislav says:
+edin prosto primer v context-a na HGDB sa RecordTypeConstructor/RecordType/Record
+Mihail says:
+shte go razgledam pak.
+Mihail says:
+shte probvam pak
+Mihail says:
+ne bi li mogyl SimpleTypeConstructor (STC) da vzeme types, da si vzeme instantsii ot tiah i da sglobi class v svoia "make" method ?
+Borislav says:
+t.e. da vzeme naprimer bytecode na IntType i da go instrumentira na bazata na XSD facets?
+Mihail says:
+naprimer, ili kakto shte ima predefined types za vsichki facets
+Mihail says:
+da vzeme type na tova, koeto mu triabva i t.n.
+Mihail says:
+shtoto naprimer facet types sa fixed i bi triabvalo syshto da mogat da se vkliuchat v predefined types.
+Borislav says:
+ama na nego mu triabva konrektnia facet za derived type-a, koito se konstruira
+Borislav says:
+i tozi facet shte e defact niakav link kam type (koito se konstruira) i ot tam nujdata do dostap do incidence set na atoma
+Mihail says:
+ok, facettype shte triabva da e neshtoto, koeto da raboti i s persistence. shte si napravi instance constructor, no dotam.
+Borislav says:
+facettype e naprimer class-at  MinOccurs
+Mihail says:
+yep.
+Borislav says:
+a samia facet instance na MinOccurs
+Mihail says:
+triabva da se polzva v constructor
+Mihail says:
+s konkretnoto value za simpleType, kojto shte se konstruira.
+Borislav says:
+da
+Mihail says:
+ok, dori i da si vzeme type ctor, da si napravi instance, triabva da populate-ne tozi instance s konkretnoto value za tozi simpleType.
+Mihail says:
+i v shemata MinOccurs triabva da go pravi tova i ne se vpisvat neshtata.
+Borislav says:
+ne sam siguren dali razbiram, no obshto vzeto problema e che informaciata nujna na STC za da postroi value-to si (t.e. derived type-a) ne e available v make metod, zashtoto tia e pod formata na links socheshti kam atom-a na tozi derived type
+Borislav says:
+a STC.make metoda niama dostap do tezi links, zashtoto niama dostap do HGHandle na atom-a
+Borislav says:
+ima samo dostap do HGHandle na _value_ na atoma
+Mihail says:
+ok, thanks. posledno pitam - predpolagam reshenieto, koeto imash naum e dobavianeto na incidence set. kakvo shte ima tam - tezi links ?
+Borislav says:
+tam shte ima vsichki links, koito sochat kam atom-a
+Borislav says:
+vseki atom ima targetSet i incidenceSet
+Borislav says:
+targetSet sa mnojestvoto atomi kam koito atoma sochi
+Borislav says:
+a incidenceSet e obratnoto: mnojestvoto atomi, koito sochat kam atom
+Borislav says:
+ako imash atom x s target set {y,z}
+Borislav says:
+to x prinadleji kam incidenceSet na y
+Mihail says:
+ok.
+Borislav says:
+izglejda mi smisleno tova kato reshenie konceptualno
+Borislav says:
+shtoto ima simetria mejdu targetSet i incidenceSet
+Borislav says:
+a fakta che za momenta sam go opredelil da priema samo targetSet se dalji na tova che poslednia e chast ot runtime stoinostta na daden atom (shtoto v runtime shte e HGLink instance), dokato incidenceSet e niakva extra informacia, koito se query-va otdelno chrez HyperGraph.getIncidenceSet(handle)
+Borislav says:
+obache tova razlichie e artifact na Java design-a, a ne na samata hypergraph struktura
+Borislav says:
+haide otivam da obiadvam i shte se varna sled okolo chas ako si oshte na linia i izkash da govorim
+Borislav says:
+tova deto napravi s listata na vsichki builtins i tehnite saotvetni Java type e mnogo polezno
+Borislav says:
+mojesh da popalnish missing Java representations (za attributes i t.n.)
+Mihail says:
+ok, priaten obiad.
+Borislav says:
+i sled tova triabva da napravish sashtata lista za facets, constraints, restrictions i pr.
+Mihail says:
+imam dostatychno za domashno zasega/
+Borislav says:
+i saotvetnite class-ove za tiah
+Borislav says:
+ok, haide

@@ -1,0 +1,62 @@
+Friday, April 13, 2007 7:32 PM
+
+> Predstaviah si STC da generira class, kojto class obache, za da ima polza
+> ot
+> nego triabva da ima niakakyv predefined interface. Tozi generiran class,
+> naprimer za string type, shte extend-va edin abstract StringValue. STC
+> shte
+> generira code-to, koeto e za validation na restrictions i shte napravi
+> "anonimen" za potrebitel class. A s instance ot tozi generiran class user
+> shte moje da raboti prez tozi StringValue interface.
+
+STC generira HGAtomType instance, i tova e edinstvenia interface s koito
+raboti user. Ako ima extra funkcionalnost, tia bi bila pak opredelena ot
+niakav core interface kato HGSearchable naprimer.
+
+> Stignah do tova polojenie, zashtoto imam kontseptualen problem za
+> razbirane
+> - shte napravim instance ot tozi generiran class, kogato izvlichame value
+> ot
+> HGDB, no kakvo shte pravim, kogato store-vame value ? Ako tova value e
+
+Emi shte store-vash tova ot koeto imame nujda. Ne zabravia che se store-va
+informacia nujna za rekonstruirane na type instance. Obiknoveno, kogato se
+make-va instance na atom (bilo to type atom ili obiknoven atom), prosto se
+sazdava instance na sashtestvuvasht class. Obache v tozi sluchai tuka,
+class-at se generira predi da se napravi instance-a i tova e edinstvenata
+osobenost. Ako se raboteshe s JavaScript ili niakoi drug object-based ezik
+niamashe da ima nujda ot sazdavaneto na class, obache v Java vseki obekt
+triabva da ima saotvetsvasht class.
+
+Znachi kato value moje bi niama nishto da slagash, i vsichkata informacia
+shte doide ot targetSet ili incidenceSet. Ako generirania class ima niakvi
+properties (ne vijdam kakvi, no da predpolojim che e vazmojno ili che
+eventualno se naloji), moje te da se slagat vav value-to.
+
+> instance na java.lang.String kak shte razpoznae HGDB kakvo da pravi s nego
+> ?
+
+java.lang.String e map-van kam org.hypergraphdb.type.StringType, taka che
+kato napravish:
+
+graph.add("My String")
+
+type-a na MyString shte bade StringType. Ako izkash da dobavish atom,
+chiito type e niakav XSD type, triabva izrichno da go spomenesh tova:
+
+HGAtomType xsdType = graph.get(handle_to_xsd_type) // tuk shte se izvika
+STC.make, koito shte generira class i varne negov instance
+
+graph.add("My String", xsdType)
+
+
+> I drugoto e - kakva e tochno roliata na generirania class v tvoiata vizia
+> za
+> neshtata - kakvo shte pravi, kak user shte dostypva negovite instances ?
+
+Negovite instances sa varnatite ot STC.make metoda i tova e edinstvenia
+nachin chrez koito user ima dostap do tiah. Pri vseki make, classat se
+regenerira nanovo....neshto, koeto mojem da promenim ako ima performance
+issues, no principno ti dava vazmojnostta da smenish link-ovete i da se
+sdobiesh s nov behavior pri sledvashtata generacia na class-a (tova e
+tricky stuff de ... i nai-veroiatno nenujno).

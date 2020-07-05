@@ -1,0 +1,25 @@
+Thursday, April 5, 2007 4:27 AM
+
+>>Pri vsichki polojenie, edin mnogo osnoven vapros sedi: za vseki edin ot
+>>tezi builtin types, triabva da reshim oshte sega kakav shte bade Java
+>> type
+>>na resultat ot negovia 'make' metod. t.e. kakav shte bade Java runtime
+>>instance na negovite instances. Naprimer za xsd:long, sigurno shte e JAva
+>>long, obache za decimal, shte triabva da e niakav BigFloat. Ili, ne znam,
+>>ako ima niakav integer type v XSD, koito e s unlimited precision, shte
+>>triabva BigInt da se polzva. Za nikoi sigurno shte triabva nov Java class
+>>da se sazdade (ili da se izkopira neshto sashtestvuvashto). Tova moje bi
+>> e
+>>sledvashtata zadacha, za da poglednem problema malko "bottom up": list of
+>>vsichki XSD builtins i kakvi shte se tehnite Java instances...
+>
+> Predstaviah si go chisto teoritichno v HGRel da ima link kym
+> XSD-narechenia
+> base type. No tova poveche, za da se poddyrjat vryzkite mejdu tipovete.
+
+Vrazkata mujdu tipove se assert-va chrez HGSubsumes link (v momenta,
+kogato se sazdavat HG types na bazata na Java beans, za vseki koito
+nasledniava, bilo to interface ili base class, ima link HGSubsumes - tova
+ti pozvoliava da pravish OO-style queries kato naprimer "dai mi vsichki
+obekti koito sa ot type A ili ot type naslediavasht A s edi si kakvo si
+property).

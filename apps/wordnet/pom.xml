@@ -1,0 +1,31 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+                      http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.hypergraphdb</groupId>
+    <artifactId>hgdbapps</artifactId>
+    <version>1.4-SNAPSHOT</version>  
+  </parent>  
+  <artifactId>hgdbwordnet</artifactId>
+  <name>HyperGraphDB WordNet Persistence</name>
+  
+  <dependencies>
+    <dependency>
+      <groupId>net.sf.jwordnet</groupId>
+      <artifactId>jwnl</artifactId>
+      <version>1.4_rc3</version>
+    </dependency>
+    <dependency>
+      <groupId>org.hypergraphdb</groupId>
+      <artifactId>hgdb</artifactId>
+      <version>${version}</version>
+    </dependency>	
+    <dependency>
+      <groupId>org.hypergraphdb</groupId>
+      <artifactId>hgdbmanagement</artifactId>
+      <version>${version}</version>
+    </dependency>
+  </dependencies>
+</project>

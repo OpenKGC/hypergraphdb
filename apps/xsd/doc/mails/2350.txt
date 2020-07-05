@@ -1,0 +1,11 @@
+Tuesday, March 13, 2007 4:51 PM
+
+btw, edin dobar, koito az polzvam, za sazdavane i manipulirane na
+razlichnite OWL versii i RDF e Protege (ot Stanford University)
+
+> Zdravej,
+>
+> Prodyljavam da se zapoznavam s OWL and i svyrzanite s nego tehnologii.
+> Predpolagam, che naj-pyrvoto neshto, koeto triabva da napravi hgdb e da
+> moje
+> da persist-ne v tselostta j edna ontologia ?

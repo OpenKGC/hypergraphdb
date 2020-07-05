@@ -1,0 +1,114 @@
+Friday, April 20, 2007 12:59 AM
+
+Malko sas zakasnenie otgovariam zashtoto izkarah edin grip...
+
+> Zdravej,
+>
+> <<< PREDEFINING THE TYPE >>>
+>   SimpleTypeConstructor stc = (SimpleTypeConstructor) hg.get(
+>       SimpleTypeConstructor.HANDLE);
+>   if(null==stc)
+>   {
+>       stc=new SimpleTypeConstructor();
+>   }
+>
+> 	//register the type
+>
+> hg.getTypeSystem().addPredefinedType(SimpleTypeConstructor.HANDLE,stc,null);
+>
+>
+
+Da, tova e nachina da se dobaviat predefined types...i triabva da se pravi
+pri vseki startup. Za celta e nai-dobre pri niakva "install" operacia na
+XSD module, da se dobavi listener kam HGOpenEvent, koito da dobavia
+specifichnite za XSD predefined types.
+
+> <<< REGISTERING A TYPE - DURING PARSE/IMPORT OF A SCHEMA >>>
+>   XMLNamespace namespace = new XMLNamespace(
+>       "http://www.w3.org/2001/XMLSchema");
+>
+>   HGHandle aHandle = hg.add(stc, SimpleTypeConstructor.HANDLE);
+
+tova ne bi triabvalo da e nujno, zashtoto 'addPredefinedType' dobavia stc
+instance-a kam hypergraph-a.
+
+> 	//restriction link
+>   FacetsDescriptor facets = new FacetsDescriptorBase();
+>   facets.addFacet(whiteSpace);
+>
+>   HGValueLink restrictionLink = new HGValueLink(facets,
+>       new HGHandle[]
+>       {aHandle});
+>   hg.add(restrictionLink);
+
+Tova ne razbiram? Zashto se pravi restriction link kam STC? Restriction e
+kam niakav instance na STC (t.e. kam niakav SimpleType, a ne kam samia
+SimpleTypeConstructor).
+
+> 	//local name-type link
+>   XSDTypeName stringName = new XSDTypeName(namespace, "string");
+>   HGHandle stringNameHandle = hg.add(stringName);
+>   XSDTypeImplementation nameType = new XSDTypeImplementation(
+>       stringNameHandle, aHandle);
+>   hg.add(nameType);
+
+da, neshto takova...
+
+> 	//base type link
+>   HGHandle javaStringHandle = hg.getTypeSystem().getHandle(String.class);
+>   HGSubsumes subsumesLink = new HGSubsumes(javaStringHandle,
+>                                            aHandle);
+>   hg.add(subsumesLink);
+
+da...
+
+>   hg.getTypeSystem().addAlias(aHandle,
+> "http://www.w3.org/2001/XMLSchema#string");
+
+da...
+
+>
+> <<< USING THE NEW TYPE - 1 >>>
+>   HGPersistentHandle phandle = UUIDPersistentHandle.makeHandle(<the
+> persistent handle for the aHandle above>);
+>   hg.get(phandle);
+
+ne polzvai UUIDPersistentHandle, tova e implementation class, ako se
+construct-va handle ot string representation polzvai
+HGHandleFactory.makeHandle(...)
+
+> 	Q1: The user needs to know the persistent handle and the XSD type it
+> corresponds to to make use of the whole thing ?
+
+no, it can be queries through the type name link
+
+> 	Q1a: Or the user will be using the query facility to find the type ? Both
+> ?
+> 	Q2: If the stc instance is in the cache and the lookup is made the
+> existing
+> instance is retrieved - the make method is not called thusno class
+> generation can commence ? Should I be removing the instance from the cache
+> somehow or I am missing something again ?
+
+I don't understand: the STC instance is the one that's generating classes.
+The STC will always be in the cache because it's a predefined type and
+there 's no way to fetch it if it's removed from the cache (that's the
+reason of being of the HGAtomCache.freeze method)!
+
+In general, you are not concerned with the cache at all. You don't care
+what's in the cache and what's not there. The make method is called when a
+value must be constructed. If it's not called, that means we already have
+the value, so why remove it? On the other hand if, once loaded, the value
+of an atom must change, HyperGraph.replace() should be called and it will
+update the cache.
+
+> <<< USING THE NEW TYPE - 2 >>>
+>   HGHandle xsHandle = hg.getTypeSystem().getHandle(
+>       "http://www.w3.org/2001/XMLSchema#string");
+>   HGAtomType xsdString = (HGAtomType) hg.get(xsHandle);
+>   System.out.println("xsdString: " + xsdString);
+>
+> 	Q1: Is that an acceptable usage ? Seems intuitive from my point of view.
+
+to store data coming from XML documents and that has type
+http://www.w3.org/2001/XMLSchema#string

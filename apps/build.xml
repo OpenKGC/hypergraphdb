@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project basedir="." name="HyperGraphDB Applications" default="all-jars">
+	<description>HyperGraphDB Applications Build File</description>
+    
+    <property name="build" value="build"/>
+    <property name="jars" value="."/>
+    <property name="debug" value="on"/>
+	
+	<!-- classpath for compiling-->
+	<path id="management-classpath">
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="wordnet-classpath">
+        <fileset dir="wordnet/jars">
+            <include name="**/*.jar"/>
+        </fileset>    
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="owl-classpath">
+	    <fileset dir="owl/.">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="xsd-classpath">
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="prolog-classpath">
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir=".">
+            <include name="hgdbmanagement.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="tm-classpath">
+        <fileset dir="tm/jars">
+            <include name="**/*.jar"/>
+        </fileset>    
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+	<path id="dataflow-classpath">
+        <fileset dir="dataflow/jars">
+            <include name="**/*.jar"/>
+        </fileset>    
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+    
+	<path id="ann-classpath">
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+        <fileset dir=".">
+            <include name="hgdbmanagement.jar"/>
+        </fileset>        
+		<pathelement path="${java.class.path}" />
+	</path>
+    
+   	<path id="sail-classpath">
+        <fileset dir="sail/jars">
+            <include name="**/*.jar"/>
+        </fileset>    
+        <fileset dir="../.">
+            <include name="**/*.jar"/>
+        </fileset>
+		<pathelement path="${java.class.path}" />
+	</path>
+
+
+    <target name="init">
+		<mkdir dir="${build}"/>
+        <mkdir dir="${build}/management"/>
+        <mkdir dir="${build}/wordnet"/>
+        <mkdir dir="${build}/tm"/>
+        <mkdir dir="${build}/owl"/>
+        <mkdir dir="${build}/xsd"/>
+        <mkdir dir="${build}/prolog"/>
+        <mkdir dir="${build}/ann"/>
+        <mkdir dir="${build}/sail"/>
+        <mkdir dir="${build}/dataflow"/>
+    </target>
+
+    <target name="ann" depends="init" description="Build Neural Networks Jar">
+		<javac source="1.5" classpathref="ann-classpath" debug="${debug}" destdir="${build}/ann" srcdir="ann/src/java"/>
+	    <javadoc sourcepath="ann/src/java" destdir="${build}/javadoc/ann" classpathref="ann-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>
+		<jar basedir="${build}/ann" jarfile="${jars}/hgdbann.jar"/>
+	</target>
+	
+	<target name="management" depends="init" description="Build HyperGraphDB Management Jar">
+		<javac source="1.5" classpathref="management-classpath" debug="${debug}" destdir="${build}/management" srcdir="management/src/java"/>
+	    <javadoc sourcepath="management/src/java" destdir="${build}/javadoc/management" classpathref="management-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>        
+		<jar basedir="${build}/management" jarfile="${jars}/hgdbmanagement.jar"/>
+	</target>
+
+	<target name="wordnet" depends="init" description="Build HyperGraphDB WordNet Jar">
+		<javac source="1.5" classpathref="wordnet-classpath" debug="${debug}" destdir="${build}/wordnet" srcdir="wordnet/src/java"/>
+	    <javadoc sourcepath="wordnet/src/java" destdir="${build}/javadoc/wordnet" classpathref="wordnet-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>
+        <copy todir="${build}/wordnet">
+          <fileset dir="wordnet/src/java">
+            <include name="**/*.xml"/>            
+            <include name="**/*.properties"/>
+          </fileset>
+        </copy>        
+		<jar basedir="${build}/wordnet" jarfile="${jars}/hgdbwordnet.jar">
+            <zipfileset src="wordnet/jars/jwnl.jar"/>
+            <zipfileset src="wordnet/jars/utilities.jar"/>
+        </jar>
+	</target>
+
+	<target name="sail" depends="init" description="Build HyperGraphDB Sail Jar">
+		<javac source="1.5" classpathref="sail-classpath" debug="${debug}" destdir="${build}/sail" srcdir="sail/src/java"/>
+	    <javadoc sourcepath="sail/src/java" destdir="${build}/javadoc/sail" classpathref="sail-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>
+        <copy todir="${build}/sail">
+          <fileset dir="sail/src/java">
+            <include name="**/*.xml"/>            
+            <include name="**/*.properties"/>
+          </fileset>
+        </copy>        
+		<jar basedir="${build}/sail" jarfile="${jars}/hgdbsail.jar">
+            <zipfileset src="sail/jars/aduna-commons-collections-2.6.0.jar"/>
+            <zipfileset src="sail/jars/aduna-commons-concurrent-2.5.0.jar"/>
+            <zipfileset src="sail/jars/aduna-commons-iteration-2.6.0.jar"/>
+            <zipfileset src="sail/jars/aduna-commons-lang-2.7.0.jar"/>
+            <!-- zipfileset src="sail/jars/logback-classic-0.9.17.jar"/>
+            <zipfileset src="sail/jars/logback-core-0.9.17.jar"/ -->
+            <zipfileset src="sail/jars/sesame-model-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-query-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-queryalgebra-evaluation-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-queryalgebra-model-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-queryparser-api-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-queryparser-serql-2.3.0.jar"/>
+            <zipfileset src="sail/jars/sesame-sail-api-2.3.0-javadoc.jar"/>
+            <zipfileset src="sail/jars/sesame-sail-api-2.3.0-sources.jar"/>
+            <zipfileset src="sail/jars/sesame-sail-api-2.3.0.jar"/>
+            <!--            <zipfileset src="sail/jars/gremlin-0.2-standalone.jar"/ -->
+            <zipfileset src="sail/jars/sesame-store-testsuite-2.3.0-javadoc.jar"/>
+            <zipfileset src="sail/jars/sesame-store-testsuite-2.3.0-sources.jar"/>
+            <zipfileset src="sail/jars/sesame-store-testsuite-2.3.0.jar"/>
+            <zipfileset src="sail/jars/slf4j-api-1.5.8.jar"/>
+            <!--
+            <zipfileset src="sail/jars/*.jar"/>
+            -->
+        </jar>
+	</target>
+
+	<target name="dataflow" depends="init" description="Build HyperGraphDB DataFlow Framework">
+		<javac source="1.5" classpathref="dataflow-classpath" debug="${debug}" destdir="${build}/dataflow" srcdir="dataflow/src/java"/>
+	    <javadoc sourcepath="dataflow/src/java" destdir="${build}/javadoc/dataflow" classpathref="dataflow-classpath">
+            <link href="http://www.hypergraphdb.org/docs/javadoc"/>
+        </javadoc>        
+        <copy todir="${build}/dataflow">
+          <fileset dir="dataflow/src/java">
+            <include name="**/*.xml"/>            
+            <include name="**/*.properties"/>
+          </fileset>
+        </copy>        
+		<jar basedir="${build}/dataflow" jarfile="${jars}/hgdbdataflow.jar"/>
+	</target>
+
+    
+	<target name="tm" depends="init" description="Build HyperGraphDB TopicMaps Jar">
+		<javac source="1.5" classpathref="tm-classpath" debug="${debug}" destdir="${build}/tm" srcdir="tm/src/java"/>
+	    <javadoc sourcepath="tm/src/java" destdir="${build}/javadoc/tm" classpathref="tm-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>        
+        <copy todir="${build}/tm">
+          <fileset dir="tm/src/java">
+            <include name="**/*.xml"/>            
+            <include name="**/*.properties"/>
+          </fileset>
+        </copy>        
+		<jar basedir="${build}/tm" jarfile="${jars}/tmhgdb.jar"/>
+	</target>
+
+	<target name="owl" depends="init" description="Build HyperGraphDB OWL Jar">
+		<javac source="1.5" classpathref="owl-classpath" debug="${debug}" destdir="${build}/owl" srcdir="owl/src/java"/>
+	    <javadoc sourcepath="owl/src/java" destdir="${build}/javadoc/owl" classpathref="owl-classpath">
+            <link href="http://www.hypergraphdb.org/docs/javadoc"/>
+        </javadoc>        
+		<jar basedir="${build}/owl" jarfile="${jars}/hgdbowl.jar"/>
+	</target>
+    
+	<target name="xsd" depends="init" description="Build HyperGraphDB XSD Jar">
+		<javac source="1.5" classpathref="xsd-classpath" debug="${debug}" destdir="${build}/xsd" srcdir="xsd/src/java"/>
+	    <javadoc sourcepath="xsd/src/java" destdir="${build}/javadoc/xsd" classpathref="xsd-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>        
+		<jar basedir="${build}/xsd" jarfile="${jars}/hgdbxsd.jar"/>
+	</target>
+
+	<target name="prolog" depends="init" description="Build tuProlog Jar">
+		<javac source="1.5" classpathref="prolog-classpath" debug="${debug}" destdir="${build}/prolog" srcdir="prolog/src/java"/>
+	    <javadoc sourcepath="prolog/src/java" destdir="${build}/javadoc/prolog" classpathref="prolog-classpath">
+            <link href="http://www.kobrix.com/javadocs/hgcore"/>
+        </javadoc>        
+		<jar basedir="${build}/prolog" jarfile="${jars}/hgdbtuprolog.jar"/>
+	</target>
+    
+	<target name="all-jars" depends="management, wordnet, sail, xsd, prolog"/>
+
+	<target description="clean up" name="clean">
+		<!-- Delete the ${build} and ${dist} directory trees -->
+		<delete dir="${build}" />
+	</target>
+
+    <target description="Load WordNet into a HyperGraphDB instance." name="loadWordNet">
+        <echo message="Starting WordNet Loader with args ${dictionaryPath} ${hypergraphDBLocation}"/>
+        <java classname="org.hypergraphdb.app.wordnet.HGWordNetLoader" fork="true">
+            <env key="PATH" value="c:/work/hg/core/lib/native/windows"/>                        
+            <arg value="${dictionaryPath}"/>
+            <arg value="${hypergraphDBLocation}"/>
+            <classpath>
+                <path refid="wordnet-classpath"/>
+                <pathelement location="${jars}/hgdbwordnet.jar"/>
+            </classpath>            
+        </java>
+    </target>
+</project>

@@ -1,0 +1,36 @@
+Saturday, March 31, 2007 7:06 PM
+
+Ne mislia che RecordType e podhodiasht za XSD complexType. Samo slots bi
+mogal da izpolzvash. No RecordType manage-va fixirana struktura, s fixiran
+blueprint ot slots. A XSD complex types sa razlichni.
+
+Pri vsichki polojenie, e malko premature da gi mislish v momenta spored
+men. Az bih izkal da sam podsiguria che sme se razbrali za podhoda:
+
+1) Sazdavane na nujnite (extra) HGAtomTypes nezavisimo ot XSD i
+preizpolzvane na sashtestvuvashti ako varshat rabot (strings, floats,
+doubles, booleans...)
+2) XSD type names kato link mejdu XML namespace i local names
+3) links mejdu XSD types name i HGAtomTypes
+4) Sazdavane na XSDSimpleTypeConstructor, koito moje da sazdava derived
+types.
+5) Modelizirane na razlichnite vidove derivations, koito se polzva ot tozi
+XSDSimpleTypeConstructor
+6) Statichno deklarirane na XSD built-ins chrez tozi
+XSDSimpleTypeConstructor, kogato moje. A kogato ne moje, sazdavane na
+otdelni, samostoiatelni primitivni HGAtomTypes za saotvetnite built-ins.
+
+i chak sled tova shte mislim za complex types i attributes.
+
+Razgledah UML digramata, no za sajalenie ne mi govori mnogo. Ne mi dava
+iasna predstava za krainia resultat. Nikoga ne sam bil fan na UML i ne sam
+go polzval mnogo, ne che e losho, ama statichni diagrami ne vinagi
+pokazvat namerenieto iasno ;)
+
+Imam naprimer oshte edna zabelejka: tova poniatie na "derivedbyunion" mi
+se struva che v HG triabva po-skoro da se predstavi kato type constructor.
+Kogato type=union ot 2 drugi types, stava duma za dosta generic union type
+constructor (kakto imash vav funkcionalni ezici ili Pascal ili C).
+Sashtoto i za list. No neka da gi ostavim tiah za posle sashto. T.e. da
+ostavim vsichki aggregate varianti (complexType, union, lists, arrays
+etc.) za posle.

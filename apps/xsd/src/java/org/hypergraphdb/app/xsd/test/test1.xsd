@@ -1,0 +1,41 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="file:///c:/kobrix/test1.xsd" targetNamespace="file:///c:/kobrix/test1.xsd" elementFormDefault="qualified" attributeFormDefault="unqualified">
+
+<xs:simpleType name="myInteger">
+  <xs:restriction base="xs:decimal">
+    <xs:minInclusive value="10000"/>
+    <xs:maxInclusive value="99999"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="myInteger1">
+  <xs:restriction base="xs:decimal">
+    <xs:minExclusive value="1000"/>
+    <xs:maxExclusive value="9999"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<xs:simpleType name="SKU">
+  <xs:restriction base="xs:string">
+    <xs:pattern value="\d{3}-[A-Z]{2}"/>
+  </xs:restriction>
+</xs:simpleType>
+
+<!--Used the money from http://msdn2.microsoft.com/en-us/library/ms190968.aspx
+as a reference. -->
+<xs:simpleType name="money">
+	<xs:restriction base="xs:decimal">
+		<xs:totalDigits value="10">
+		</xs:totalDigits>
+
+		<xs:fractionDigits value="4">
+		</xs:fractionDigits>
+
+		<!--<xs:maxInclusive value="922337.5807">
+		</xs:maxInclusive>
+
+		<xs:minInclusive value="-922337.5808">
+		</xs:minInclusive>-->
+	</xs:restriction>
+</xs:simpleType> 
+
+</xs:schema>

@@ -1,0 +1,15 @@
+Manifest-Version: 1.0
+Export-Package: org.hypergraphdb.app.management;uses:="org.hypergraphd
+ b.util,org.hypergraphdb.type,org.hypergraphdb,org.hypergraphdb.query"
+Bundle-SymbolicName: org.hypergraphdb-hgdbmanagement;singleton:=true
+Bundle-Name: HyperGraphDB App Management
+Bundle-Version: 1.4.0.SNAPSHOT
+Built-By: chenxm
+Bundle-ManifestVersion: 2
+Bnd-LastModified: 1449385431639
+Import-Package: org.hypergraphdb,org.hypergraphdb.app.management,org.h
+ ypergraphdb.query,org.hypergraphdb.type,org.hypergraphdb.util
+Created-By: Apache Maven Bundle Plugin
+Tool: Bnd-0.0.238
+Build-Jdk: 1.8.0_252
+

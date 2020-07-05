@@ -1,0 +1,89 @@
+Tuesday, March 13, 2007 4:29 PM
+
+Daje ima oshte po-parvo neshto: da moje da se import-va edin XSD file v
+type systemata. Mislia che plana triabva da e slednia:
+
+1) XSD type. Vseki type v XSD a unikalno opredelen ot niakvo
+URI=namespace+local_name. Ima vsichki primive types i sled raznite XSD
+type constructors.
+
+2) RDF: da mogat da se load-vat RDF dokumenti.
+
+3) Chak togava OWL.
+
+V Subversion, pod apps/xsd ima niakvi class-ove, pochti nishto
+sashtestveno, no 2-3 class-a za nachalo, za implementacia na XSD. Ima edno
+uslovie predi tova da moje da se implementira kato horata: da moje v
+HyperGraph da se zapisvat atoms kato slots/parts na drugi atoms. Naprimer
+ako imash:
+
+class A
+{
+  private B b;
+
+  getB() ...
+  setB(B b)...
+}
+
+da moje A.b da e atom v HGDB, a ne samo chast ot value-to na A. Za celta
+ima niakvi osnovi pod formata na HGAtomRef. Obache mi se izka
+persistence-a da e minimalno intrusive v Java API-a tova oslojniava
+neshtata dosta. No mi e sledvashtata zadacha za HyperGraph. Strategiata mi
+e gore dolu slednata:
+
+1) Triabva niakav nachin da se indikira che A.b e otdelen atom. Za celta
+shte ima niakav API, no mislia naprimer i da dobavia vazmojnost da se
+anotira class A s novite Java metadata facilities.
+
+2) Triabva niakav nachin da se zakachat HGHandle kam Java reference taka
+che, kogato se podade:
+
+A.setB(someB)
+
+da moje da se razbere dali someB veche e v HyperGraph i ima saotveten
+HGHandle, ili triabva da se dobavi nov.
+
+Slojnoto na tova e che ne izkam da vavejdam poniatia kato primary keys,
+izkam edinstvenia key/reference kam atom da si ostane HGHandle. Ta,
+trick-a moje bi shte vkluchva niakav bytecode instrumentation sigurno.
+Kato se prochete obekt ot HGDB, da se instrument-va class-a i da mu se
+zakachi negovia HGPersistentHandle. No ne znam oshte, dosta slojen problem
+e.
+
+A zashto kazvam che XSD implementation-a zavisi ot tova. Shtoto naprimer
+ima slednite classove:
+
+class XMLNamespace { private String uri; }
+class XSDTypeName { private XMLNamespace namespace; private String
+locaName; }
+
+
+i celta e niakolko XSDTypeName da share-vat edin i sashti XMLNamespace
+instance. T.e. vseki zapisan XSDTypeName triabva da refer-va kam niakav
+XMLNamespace atom.
+
+No imam i kolebania! Kato se zamisli chovek, sviknali sme da strukturirame
+danni s objects i attributes. Obache v HyperGraph ima vse pak malko
+po-razlichen native model, toza na graph ot linked entities. Znachi moje
+bi prosto triabva da se adaptira i design na data structures spored tozi
+model. V konkretnia sluchai naprimer da ima XSDTypeName koito da e link s
+arity=1 (t.e. size(targetSet)=1) i koito sochi kam XMLNamespace atoma:
+
+class XSDTypeName extends HGPlainLink
+{
+  private String localName;
+
+  public XSDTypeName(HGHandle namespaceHandle, String localName)
+  {
+      super(new HGHandle[] { namespaceHandle});
+  }
+
+  public HGHandle getNamespace() { return getTargetAt(0); }
+}
+
+Osnovnia problem s tova e che kato pishesh Java kod, ne polzvash native
+Java references, ami HGHandles. Naprimer metoda getNamespace() ne ti
+vrashta XMLNamespace, ami HGHandle, koito triabva sled tova da
+resolve-vash chrez  niakav HyperGraph.get(...).
+
+Imash li mnenie po tezi issue-ta?

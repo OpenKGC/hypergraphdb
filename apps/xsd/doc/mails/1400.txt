@@ -1,0 +1,99 @@
+Thursday, April 5, 2007 5:30 AM
+
+>>Kato se pozamislih malko po-seriozno kak SimpleTypeConstructor shte
+make-va derived simple types, polzvaiki "semantic links" za restrictions
+etc., se usetih che vsashnost ima dosta osnoven problem:
+>>SimpleTypeConstructor niama dostap do 'handle' na atom-a chieto value
+toi
+>>triabva da konstruira, taka che niama nachin da nameri negovite links.
+Tova e taka po design i e neshto, koeto ne bih promenil: types rabotiat
+direktno s values i ne zavisiat ot tova dali tezi values za hypergraph
+atoms, ili prosto niakvi fields na razni aggregate structuri. Mapping-a
+atoms->values e many-to-one, i ne za vsiako value ima zadaljitelno atom.
+Shte triabva da se zamislim malko poveche po temata ;)
+>
+> Ne sym mnogo ubeden, che e tehnicheski pravilno v context na HGDB, no
+vse
+> me
+> vleche da "vidia" ot kraj do kraj podavaneto na xsd schema do
+> poluchavaneto
+> na syotvetnite HGDB types. Ta za momenta imam edin SAX handler, kojto
+
+Ok, saglsen sam. Napravih ti Subversion user: liahim/wh1ppet za da mojesh
+da commit-vash, taka che i az da sledia evoluciata na koda. Probvai si
+credentials da vidim dali rabotiat.
+
+> igrae
+> roliata na type importer. Vse niakyde triabva da se stigne do
+> hg.getTypeSystem().addPredefinedType. Ta se opitvam pri import da syzdam
+
+Ne, predefined types sa si predefined types, i te sa statichno
+konfigurirani. T.e. SimpleTypeConstructor (ili BDTConstructor) shte e
+predefined type, no ne i tezi, koito se load-vat ot schema file! Novite
+types ot schema file prosto se dobaviat kato HG atoms (niama razlika mejdu
+types i atoms v HG, osven che parvite implement-va HGAtomType interface!).
+
+> BuiltinDerivedType instance (s local name XSD type name) i syotveten
+BDTConstructor instance, kojto da proizvejda BuiltinDerived(Values),
+koito
+> da sa astotsiirani po niakakyv nachin s BuiltinDerivedType.
+>
+> Primerno po vreme na parsing na edin simpleType se sluchva neshto
+takova:
+> 1. Pravi se BDT instance.
+> 2. Set-up-vat se vsichki links na bazata na sydyrjanieto na simpleType.
+3. Pravi se BDTConstructor instance, kojto pazi reference kym BDT
+instance.
+> 4. BDTConstructor instance se registrira s type system.
+>
+> Kogato BDTConstructor triabva da pravi BD(Value) instance ima vsichko
+gotovo..
+>
+
+Tova vsashnost e problema ;) Kato se opitam da si predstavia kakvo tochno
+stava stigam da tezi osnovni problemi i neiasnoti.
+
+Ne sam mnogo siguren veche kakvo e BDTConstructor, no dokolkoto razbiram
+tova e sashtoto, koeto az naricham SimpleTypeConstructor. T.e., tova e
+atom type koito manage-va built-in derived types deklarirani chrez
+simpleType tag. V takav sluchai toi e predefined i se registrira samo edin
+pat, kogato se "instalira" XSD application v HyperGraph instance.
+
+Eto kak az si predstaviam pri prochitane na simpleType tag:
+
+1) Sazdava se nov SimpleType atom (ili BDT kakto mu vikash), chiito type e
+SimpleTypeConstructor (koito si e s predefined handle, kakto v momenta sa
+deklarirani v config/org/hypergraphdb/types).
+2) value-to na tozi nov type e 'HGHandleFactory.nullHandle()' - t.e.,
+oshte ne e konstruirano. Znachi koda, koito dobavia novia BDT izglejda
+taka:
+
+SimpleTypeConstructor stc = hg.get(SimpleTypeConstructor.HGHANDLE);
+hypergraph.add(stc, null)
+
+znachi SimplyTypeConstructor.store(null) triabva da vrashta
+HGHandleFactory.nullHandle(), kogato parametara mu e null.
+
+3) Sazdavat se links za vsichkite restrictions, attributes i pr. kam novia
+atom.
+
+4) Sazdava se HGSubsumes mejdu base type-a i novia atom.
+
+Dobavkata e gotova.
+
+Sega, kogato triabva da se sazdade runtime instance na novia BDT, veche
+vliza v upotreba istinskata mashinaria:
+
+Object SimpleTypeConstructor.make(HGHandle valueHandle, HGHandle []
+targetSet)
+{
+  tuk tiabva da se postroi dinamichno class-a, t.e. da se generira
+bytecode za novia BDT type na bazata na cialata informacia za nego
+(restrictions, base type i pr.), da se sazdade negov instance i da se
+varne tozi instance
+
+i tova vsashnost opira do problema, koito opisvam po-dore....imam niakvo
+reshenie na tozi problem, koeto shte ti opisha, no parvo izkam da popitam
+dali razbirash kakav e toi? (make metoda niama info za link-ovete,koito
+sochat kam atoma, koito triabva da se make-va!)
+}
